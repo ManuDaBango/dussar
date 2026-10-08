@@ -180,3 +180,4 @@ details ul { margin: .4em 0; padding-left: 1.2em; }
   .hand { flex-wrap: nowrap; overflow-x: auto; padding: 14px 18px 6px; justify-content: flex-start; max-width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.tag a { color: var(--gold); }

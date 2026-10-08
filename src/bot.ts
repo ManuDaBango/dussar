@@ -109,6 +109,25 @@ function choosePlay(view: PlayerView): Action {
   const cheapest = cheapFirst[0] as Card;
   const strongestPlain = [...plays].sort((a, b) => Number(isTrump(a)) - Number(isTrump(b)) || b.rank - a.rank)[0] as Card;
 
+  /**
+   * Leading into an EMPTY pile. Winning this trick only starts the streak; the next trick is the
+   * one that collects. So a good player saves the Ace for trick two and opens with a card that
+   * is strong but not the top one:
+   *   1. a King (or lower) from a suit where we also hold the Ace: this wins the trick for sure,
+   *      and the Ace is waiting for the next one;
+   *   2. otherwise the highest non-Ace, non-trump card;
+   *   3. if we only have Aces and trumps, the cheapest card (never waste an Ace here).
+   */
+  const freeLead = (): Card => {
+    const plain = plays.filter((c) => !isTrump(c));
+    const aceSuits = new Set(plain.filter((c) => c.rank === 14).map((c) => c.suit));
+    const nonAce = plain.filter((c) => c.rank < 14);
+    const backed = nonAce.filter((c) => aceSuits.has(c.suit)).sort((a, b) => b.rank - a.rank)[0];
+    if (backed) return backed;
+    const best = nonAce.sort((a, b) => b.rank - a.rank)[0];
+    return best ?? cheapest;
+  };
+
   const trick = view.trick.plays;
   const play = (card: Card): Action => ({ type: 'play', card });
 
@@ -119,7 +138,8 @@ function choosePlay(view: PlayerView): Action {
     if (canReveal && (needToWin === 'stop' || needToWin === 'streak') && strongestPlain.rank < 14 && view.trump !== null) {
       return { type: 'reveal_trump' }; // the owner knows he has trumps; lead one
     }
-    return play(strongestPlain);
+    if (needToWin === 'free') return play(freeLead());
+    return play(strongestPlain); // 'stop' or 'streak': we must win this trick, so use the best card
   }
 
   // ---- following ----

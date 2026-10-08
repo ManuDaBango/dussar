@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dussar: how to play</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root { --felt:#1f5a43; --felt-dark:#154634; --paper:#fbf7ee; --ink:#1d1d1b; --gold:#e6b84a; --muted:#5b6b62; --line:#e2dccb; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+    header { background:var(--felt); color:#fff; padding:28px 16px 24px; text-align:center; }
+    header h1 { margin:0 0 4px; font-size:2rem; letter-spacing:.02em; }
+    header p { margin:0; color:#d6e8dd; }
+    main { max-width:720px; margin:0 auto; padding:8px 16px 40px; }
+    h2 { margin:28px 0 6px; font-size:1.2rem; color:var(--felt-dark); border-bottom:2px solid var(--gold); padding-bottom:4px; }
+    ul, ol { padding-left:1.3em; margin:8px 0; }
+    li { margin:4px 0; }
+    .key { background:#fff; border:2px solid var(--gold); border-radius:12px; padding:12px 16px; margin:18px 0; }
+    table { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95rem; background:#fff; }
+    th, td { border:1px solid var(--line); padding:6px 10px; text-align:left; }
+    th { background:#f3ecd9; }
+    .play { display:inline-block; margin:12px 0 0; background:var(--felt); color:#fff; text-decoration:none; padding:10px 20px; border-radius:10px; font-weight:600; }
+    footer { border-top:1px solid var(--line); margin-top:32px; padding-top:16px; color:var(--muted); font-size:.95rem; }
+    a { color:var(--felt); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Dussar</h1>
+    <p>A trick-taking card game for 4 players in 2 partnerships</p>
+  </header>
+  <main>
+    <div class="key"><b>The big idea:</b> winning one trick is not enough. The <b>same player</b> has to win <b>two tricks in a row</b> to collect all the cards sitting in the middle for their team.</div>
+
+    <h2>1. Setup</h2>
+    <ul>
+      <li>4 players, one standard 52-card pack. Partners sit opposite each other (seats 1 &amp; 3 against 2 &amp; 4).</li>
+      <li>Cards rank from Ace (high) down to 2. Everyone must follow the suit led if they can.</li>
+      <li>Each round is 13 tricks. Each player ends up with 13 cards.</li>
+    </ul>
+
+    <h2>2. Bidding</h2>
+    <ul>
+      <li>Each player first gets <b>5 cards</b>. Starting left of the dealer, each player passes or bids how many of the 13 tricks their team will win: <b>9 to 13</b>, each bid higher than the last.</li>
+      <li>If everyone passes, the dealer may open at 8. If the dealer passes too, the cards are re-dealt.</li>
+    </ul>
+
+    <h2>3. The hidden trump</h2>
+    <ul>
+      <li>The top bidder secretly puts <b>one card face down</b>. Its suit is the <b>trump suit</b>, but nobody else knows it yet.</li>
+      <li>Everyone then receives their remaining cards (13 each).</li>
+      <li>Before play begins, a player may call <b>26</b> (their team wins every trick) or <b>52</b> (they play alone while their partner sits out). A 52 call beats a 26 call. The caller then names the trump suit openly.</li>
+    </ul>
+
+    <h2>4. Playing tricks</h2>
+    <ul>
+      <li>The top bidder leads. The highest card of the suit led wins the trick, unless trump is played (see below).</li>
+      <li>The cards of a won trick stay <b>in the middle as a pile</b>. They are not collected yet.</li>
+      <li><b>The two-in-a-row rule:</b> if the same player wins the next trick too, they collect the whole pile for their team. If someone else wins the next trick, that player now has to win the trick after that, and so on.</li>
+      <li>Partners winning one trick each do <b>not</b> count: it must be the same person.</li>
+      <li>Whoever wins the 13th (last) trick collects whatever is left in the middle.</li>
+    </ul>
+
+    <h2>5. Revealing the trump</h2>
+    <ul>
+      <li>If you <b>cannot follow suit</b>, you may ask for the trump to be shown. The hidden card is turned over and returned to its owner.</li>
+      <li>After that, any player who cannot follow suit <b>must play a trump</b> if they have one. A trump beats any card of another suit; the highest trump wins.</li>
+      <li>The top bidder may also reveal the trump when leading.</li>
+    </ul>
+
+    <h2>6. Scoring</h2>
+    <table>
+      <tr><th>Call</th><th>If it succeeds</th><th>If it fails</th></tr>
+      <tr><td>Your bid (9 to 13)</td><td>Your team scores the bid</td><td>The other team scores double the bid</td></tr>
+      <tr><td>26</td><td>26</td><td>The other team scores 52</td></tr>
+      <tr><td>52</td><td>52</td><td>The other team scores 104</td></tr>
+      <tr><td>"5 cards" (top bidder only)</td><td>26</td><td>The other team scores 52</td></tr>
+    </table>
+    <ul>
+      <li>A round ends early once the bid is made, or once it cannot be made any more.</li>
+      <li><b>Only one team holds points at a time.</b> The score is a single number. Points won by a team first cancel the other team's points, and any remainder stays with the winners. For example, if Team 1 has 18 and Team 2 wins 52, Team 2 now holds 34 and Team 1 has none.</li>
+      <li>The first team to reach <b>104</b> wins the game.</li>
+      <li><b>"5 cards":</b> the top bidder may declare it between tricks while everyone still holds more than 5 cards and the opponents have collected nothing yet. It counts as a 26-style call.</li>
+    </ul>
+
+    <h2>7. A few tips</h2>
+    <ul>
+      <li>Do not waste an Ace on a fresh pile. Win the first trick with a good lower card (a King, for example), then use the Ace on the next trick to collect.</li>
+      <li>If your partner has just won a trick, play low so that they can win the next one and collect.</li>
+      <li>If an opponent has just won a trick, you must stop them from winning the next one.</li>
+    </ul>
+
+    <a class="play" href="/">Play online</a>
+
+    <footer>
+      Game by <b>Manu Sood</b>. Questions or feedback? <a href="mailto:manu@alt108.com">manu@alt108.com</a>
+    </footer>
+  </main>
+</body>
+</html>

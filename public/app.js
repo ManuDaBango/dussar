@@ -123,6 +123,7 @@ function homeHtml() {
       <input id="code" type="text" maxlength="4" autocapitalize="characters" autocomplete="off" placeholder="Room code" value="${esc(state.draftCode)}" aria-label="Room code">
       <button class="btn ${joining ? '' : 'secondary'}" data-act="join" ${state.connected ? '' : 'disabled'}>Join</button>
     </div>
+    <p class="tag"><a href="/rules.html" target="_blank" rel="noopener">How to play</a> &middot; by Manu Sood &middot; <a href="mailto:manu@alt108.com">manu@alt108.com</a></p>
   </div>`;
 }
 
@@ -333,6 +334,7 @@ function rulesHtml() {
     <li>Bid 9 to 13 tricks using your first 5 cards. The top bidder hides a card whose suit is the trump. If you can't follow suit you may ask for the trump to be shown, and then you must play a trump if you have one.</li>
     <li>Make your bid: score the bid. Fail: the other team scores double. Only one team holds points at a time. First to 104 wins.</li>
     <li>Call 26 (you and partner take every trick) or 52 (you alone) for bigger stakes.</li>
+    <li><a href="/rules.html" target="_blank" rel="noopener">Full rules and contact</a></li>
   </ul></details>`;
 }
 

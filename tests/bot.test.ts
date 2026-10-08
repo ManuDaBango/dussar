@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { chooseAction } from '../src/bot';
-import { seededRng } from '../src/cards';
+import { cardToString, seededRng } from '../src/cards';
 import { applyAction, legalActions, newGame, startNextRound } from '../src/engine';
 import { RoomManager } from '../src/server/rooms';
 import { MemoryStore } from '../src/server/store';
 import type { Action, GameState, Seat } from '../src/types';
 import { viewFor } from '../src/view';
+import { playState } from './helpers';
 
 /** A deliberately silly opponent: any legal move, but it avoids the big calls. */
 function randomAction(g: GameState, seat: Seat, rng: () => number): Action {
@@ -77,5 +78,31 @@ describe('rooms with computer players', () => {
       m.act(room.code, human.token, acts[Math.floor(rng() * acts.length)] as Action);
     }
     expect(room.game!.round.outcome).not.toBeNull();
+  });
+});
+
+describe('opening a trick when the pile is empty', () => {
+  const lead = (hand: string) => {
+    const g = playState({ hands: [hand, '2D 3D 4D 5D', '6D 7D 8D 9D', '2C 3C 4C 5C'], leader: 0, trump: 'H', hidden: '2H' });
+    const a = chooseAction(viewFor(g, 0));
+    return a.type === 'play' ? cardToString(a.card) : a.type;
+  };
+
+  it('keeps the Ace back and leads the King of the same suit', () => {
+    expect(lead('AS KS 9C 4D')).toBe('KS');
+  });
+  it('with two Aces, leads the highest non-Ace instead', () => {
+    expect(lead('AS AC 10D 4D')).toBe('10D');
+  });
+  it('never spends an Ace as the opener if it has anything else', () => {
+    expect(lead('AS AC 3D')).toBe('3D');
+  });
+  it('still plays the Ace when it is already holding the pending win', () => {
+    const g = playState({ hands: ['AS KS 4D 9C', '2D 3D', '6D 7D', '2C 3C'], leader: 0, trump: 'H', hidden: '2H' });
+    g.round.pileSize = 4;
+    g.round.lastTrickWinner = 0;
+    g.round.lastTrick = { plays: [], winner: 0, collected: false } as never;
+    const a = chooseAction(viewFor(g, 0));
+    expect(a.type === 'play' && cardToString(a.card)).toBe('AS');
   });
 });
