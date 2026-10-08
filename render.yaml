@@ -1,0 +1,11 @@
+# Tells Render how to run Dussar. Render reads this file when you create a "Blueprint".
+services:
+  - type: web
+    name: dussar
+    runtime: node
+    plan: free            # free: sleeps after 15 quiet minutes and forgets saved games when it restarts
+    region: singapore     # closest Render region to Australia and India
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true      # re-deploys by itself whenever new code is pushed to GitHub

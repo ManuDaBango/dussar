@@ -1,0 +1,36 @@
+flowchart TB
+  subgraph BROWSER["Each player's browser (phone or laptop) - folder public"]
+    html["index.html - the page shell"]
+    css["style.css - colours and layout"]
+    app["app.js - draws the table, sends your clicks"]
+  end
+  subgraph SERVER["The game server - folder src/server"]
+    main["main.ts - starts the server"]
+    srv["server.ts - serves the page, keeps live connections open"]
+    proto["protocol.ts - message formats, checks all incoming data"]
+    rooms["rooms.ts - rooms, seats, who is allowed to move"]
+    store["store.ts - saves games"]
+  end
+  subgraph RULES["The rules of Dussar - folder src"]
+    engine["engine.ts - THE RULES: legalActions, applyAction, advancePile, trickWinner, scoring"]
+    view["view.ts - viewFor: what each player may see"]
+    types["types.ts - the shape of a game and of every move"]
+    cards["cards.ts - deck, shuffle"]
+    bot["bot.ts - computer player: picks a move from its own view"]
+  end
+  db[("data/dussar.db - saved games")]
+  html --> app
+  html --> css
+  app <-->|"1 your move out, 6 your own view back (WebSocket)"| srv
+  main --> srv
+  srv -->|"2 check the message"| proto
+  srv -->|"3 hand the move over"| rooms
+  rooms -->|"4 apply the move"| engine
+  rooms -->|"5 build each player's view"| view
+  view --> engine
+  rooms -->|"save after every move"| store
+  store --> db
+  engine --> cards
+  engine --> types
+  rooms -->|"computer players: ask for a move"| bot
+  bot --> view
